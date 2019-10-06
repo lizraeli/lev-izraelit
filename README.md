@@ -14,7 +14,6 @@
 * Landingpage
 * Blog overview page
 * Markdown sourcing from /content folder
-* Estimated reading time for each post
 * Styled components with emotion
 * Netlify deployment friendly
 * Nunito font included as npm module

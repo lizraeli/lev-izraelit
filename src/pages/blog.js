@@ -22,18 +22,6 @@ const MarkerHeader = styled.h3`
   display: inline;
   border-radius: 1em 0 1em 0;
   margin-bottom: 10px;
-  background-image: linear-gradient(
-    -100deg,
-    rgba(255, 250, 150, 0.15),
-    rgba(255, 250, 150, 0.8) 100%,
-    rgba(255, 250, 150, 0.25)
-  );
-`
-
-const ReadingTime = styled.h5`
-  display: inline;
-  color: #606060;
-  margin-bottom: 10px;
 `
 
 const IndexPage = ({ data }) => {
@@ -54,7 +42,6 @@ const IndexPage = ({ data }) => {
               <MarkerHeader>{node.frontmatter.title} </MarkerHeader>
               <div>
                 <ArticleDate>{node.frontmatter.date}</ArticleDate>
-                <ReadingTime> - {node.fields.readingTime.text}</ReadingTime>
               </div>
               <p>{node.excerpt}</p>
             </Link>
