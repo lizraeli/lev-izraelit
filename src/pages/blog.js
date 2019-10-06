@@ -30,7 +30,7 @@ const IndexPage = ({ data }) => {
       <SEO title="Blog" />
       <Content>
         <h1>Blog</h1>
-        {data.allMarkdownRemark.edges.map(({ node }) => (
+        {data.allMdx.edges.map(({ node }) => (
           <div key={node.id}>
             <Link
               to={node.frontmatter.path}
@@ -47,6 +47,24 @@ const IndexPage = ({ data }) => {
             </Link>
           </div>
         ))}
+        {/* {data.allMarkdownRemark.edges.map(({ node }) => (
+          <div key={node.id}>
+            <Link
+              to={node.frontmatter.path}
+              css={css`
+                text-decoration: none;
+                color: inherit;
+              `}
+            >
+              <MarkerHeader>{node.frontmatter.title} </MarkerHeader>
+              <div>
+                <ArticleDate>{node.frontmatter.date}</ArticleDate>
+              </div>
+              <p>{node.excerpt}</p>
+            </Link>
+          </div>
+        ))}
+         */}
       </Content>
     </Layout>
   )
@@ -73,11 +91,19 @@ export const query = graphql`
           }
           fields {
             slug
-            readingTime {
-              text
-            }
           }
           excerpt
+        }
+      }
+    }
+    allMdx {
+      edges {
+        node {
+          frontmatter {
+            title
+            path
+            date(formatString: "MMMM DD, YYYY")
+          }
         }
       }
     }
