@@ -77,7 +77,9 @@ function SEO({ description, lang, meta, keywords, title }) {
             : []
         )
         .concat(meta)}
-    />
+    ><noscript>{`
+    <link rel="stylesheet" type="text/css" href="layout.css" />
+`}</noscript></Helmet>
   )
 }
 

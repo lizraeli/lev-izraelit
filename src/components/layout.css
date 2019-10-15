@@ -22,6 +22,7 @@ section,
 summary {
   display: block;
 }
+
 audio,
 canvas,
 progress,
@@ -622,4 +623,9 @@ pre tt:after {
   html {
     font-size: 100%;
   }
+}
+
+.code-editor {
+  width: 100%;
+  height: 400px;
 }
