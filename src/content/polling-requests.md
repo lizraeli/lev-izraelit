@@ -5,11 +5,6 @@ draft: false
 path: "/blog/repeated-network-requests-with-hooks"
 ---
 
-
-## Motivations
-
-It has been a long standing objective to make reusable components with any front-end framework. Hooks allow us somethings new - making stateful, reusable bits of logic that can be combined and used within any component. For this post we'll create a hook that encapsulates the logic for making polling network requests. We will be able to use it like this:
-
 ```tsx
 function MyComponent() {
   const {
@@ -19,12 +14,12 @@ function MyComponent() {
     fetchingError,
     startMakingRequests,
     stopMakingRequests
-  } = usePollingRequests(apiCall, timeOutMs);
+  } = usePollingRequests(apiCall, intervalMs);
   ...
 }
 ```
 
-We will pass the api call and the timeout between requests in miliseconds, and get back:
+We will pass the api call and the interval between requests in miliseconds, and get back:
 
 - the response data (if any)
 - the fetching error (if any)
