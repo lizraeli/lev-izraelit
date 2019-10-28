@@ -8,11 +8,11 @@ path: "/blog/state-hook"
 
 ### Introduction
 
-This post feature an implementation from the ground-up of the [useState](https://reactjs.org/docs/hooks-overview.html#state-hook) hook. This implementation is not nescesarilly equivalent to the official one - The goal is to understand better how to implement something that works like **useState**. Understanding _this_, or any, implementation of a library is not a requirement to using it. However, I do feel that this depth of understanding is useful - with any abstraction, the are advantages to understanding how it is constructed to begin with.
+This post features an implementation from the ground-up of the [useState](https://reactjs.org/docs/hooks-overview.html#state-hook) hook. This implementation is not nescesarilly equivalent to the official one - the goal is to understand better how to implement something that works *like* **useState**. Understanding _this_, or any, implementation of a library is not a requirement to using it. However, I do feel that this depth of understanding is useful - with any abstraction, there are advantages to understanding how it is constructed.
 
 ### From stateful classes to stateful functions
 
-When we think of [state](https://en.wikipedia.org/wiki/State_(computer_science)), classes are usualy the first thing that springs to mind, since a [class](https://en.wikipedia.org/wiki/Class_(computer_programming)) can have properties that change over time. This translates directly to class components in React, in which we define and access state variables via [this](https://en.wikipedia.org/wiki/This_(computer_programming)):
+When we think of [state](https://en.wikipedia.org/wiki/State_(computer_science)), classes are usualy the first thing that springs to mind. We can easily define properties on a [class](https://en.wikipedia.org/wiki/Class_(computer_programming)) and change these over time. This translates directly to class components in React, in which we define and access state variables via [this](https://en.wikipedia.org/wiki/This_(computer_programming)):
 
 ```jsx
 class Counter {
@@ -39,13 +39,13 @@ class Counter {
 ```
 
 
-When it comes to functions, their being stateless seems to be natural. A function has an input an output, and usually we strive to keep a function [pure](https://en.wikipedia.org/wiki/Pure_function), so that given the same input to would always return the same output:
+When it comes to functions, their being stateless is natural. A function has an input an output, and usually we strive to keep a function [pure](https://en.wikipedia.org/wiki/Pure_function), so that given the same input it would always return the same output:
 
 ```js
 const add = (x, y) => x + y
 ```
 
-In React, we expect a stateless functional component to works the same way as the `add` function, always rendering the same thing given the same **props**:
+In React, we've compe to expect a stateless functional component to works the same way as the **add** function, always rendering the same thing given the same **props**:
 
 ```jsx
 const CountDisplay = ({ count }) => <div>{count}</div>
@@ -64,11 +64,7 @@ const Counter = () => (
 )
 ```
 
-<iframe class="code-editor" src="../post-1/counter-global" style="overflow: auto;"></iframe>
-
-But this does not work in React. Even though value of **count** changes, the **Counter** component does not re-render to show it - no props are changed, and **Counter** does not get called again. Some frameworks _do_ support this use of global variables - [svelte](https://svelte.dev/repl/417dd8f8a0e84341be3cd08e2f2b394a?version=3.12.1) being one example.
-
-### From parent components to hooks
+But this does not work in React. Even though value of **count** changes, the **Counter** component does not re-render to show it. Some front-end frameworks _do_ use this use of global variables - [svelte](https://svelte.dev/repl/417dd8f8a0e84341be3cd08e2f2b394a?version=3.12.1) being one example.
 
 Since our functional component cannot re-render itself on changes to external state, we need someone who would both manage the state and re-render the component when the state changes. We already have that ability when using a parent class component, by passing a callback as a prop. But in this case, we are trying to go a different route - we want the state to be managed for us in the background. And we will allow the functional component to trigger the state management by calling a function. Let's start by implementing one specific to the **count** we've been using above. 
 We will make a custom **MyReact** object that will provide a **useCount** method and a **render** method, to be used like so:
@@ -118,9 +114,9 @@ Going over the above methods:
 <iframe class="code-editor" src="../post-1/use-count" style="overflow: auto;"></iframe>
 
 
-Now this is beginning to work, at least in the above example. We still have an object that keeps state, but this can happen "behind the scenes". The main thing we needed to do was to join the rendering and state management, so that we are able to re-render whenever the state changes. 
+Now this is beginning to work, at least in the above example. We still have an object that keeps state, but this is happenning behind the scenes. The main thing we needed to do was to join the rendering and state management, so that we are able to re-render whenever the state changes. 
 
-Next, we will want to get to something more general than **useCount**. The first step to achieving this is by changing the variable name from **count** to state, and the method names to **useState** and  **setState**. Also, instead of having **MyReact** determine the initial value of the state, we will have the caller pass it as an argument:
+Next, we will want to achieve something more general than **useCount**. We'll change variable name from **count** to **state**, and the method names to **useState** and  **setState**. Also, instead of having **MyReact** determine the initial value of the state, we will have the caller pass it as an argument:
 
 ```js
 const MyReact = {
@@ -157,7 +153,7 @@ const Counter = () => {
 }
 ```
 
-A second issue is that **MyReact** currently allows creating only a single state variable. Any subsequent call to **MyReact.useState** will overwrite the single **state** variable. This can be resolved by having **MyReact** store an array of state variables rather than a single one. But now we need some way to know, whenever **setState** is being called, which state variable is the one we want to change. We can do that by relying on the call order:
+We will also want **MyReact** to be able to create more than a single state variable. Currently, Any subsequent call to **MyReact.useState** will overwrite the initially defined variable. We can achieve this by having **MyReact** store an array of state variables. But now we'll need some way to know, each time **setState** is being called, *which* state variable is the one we want to change. We can do this by relying on the call order to **useState**:
 
 ```jsx
 const MyCounter = () => {
@@ -166,7 +162,13 @@ const MyCounter = () => {
 }
 ```
 
-As long as the **MyReact.useState** methods are not called inside a conditional block, the two calls would always be executed in the same order. . But now we will also need to store not only state values, but also the related **setState** calls. We'll transform the single **state** value into an array of **stateHolder**s - each state holder being an object with a state value and a **setState** method. We will also need to store an index indicating the latest state holder we have refrenced, which we will be reset to **0** whenver any **setState** is being called. Feel free to jump to the example and explanation below.
+As long as the **MyReact.useState** methods are *not* called inside a conditional block, the two calls will always be executed in the same order. 
+
+We will use an array to store pairs  of the **state** value *and* the corresponding **setState** calls. We'll call these **stateHolder**s.
+
+We will also store an index indicating the latest state holder we have refrenced, which we will be reset to **0** whenver *any* **setState** is called.
+
+*note:* the code bellow gets a bit dense. It is followed by an explanation and an example.
 
 ```js
 const MyReact = {
@@ -200,8 +202,12 @@ const MyReact = {
 }
 ```
 
-Heres an example using the updated **MyReact**:
+Here's an example using the updated **MyReact**:
 
 <iframe class="code-editor" src="../post-1/use-state-arr" style="overflow: auto;"></iframe>
 
 One illuminating aspect of the above can be gleaned by opening the devtools and observing the output of the **console.log** statements inside **useState**. On each render of the component, **useState** will be called twice. On the initial render, two **stateHolder** objects will be creating. When we click on either of the **+** buttons, **setState** is called once, which leads to the currentIndex to be reset to 0, and to the component being re-rendered.
+
+### Conclusion
+
+We've achieved a working version of a **useState** hook build from the ground up. The next steps would be to see how we can make this work not just for a single component, but for any number of them. 
