@@ -8,7 +8,25 @@ path: "/blog/state-hook"
 
 ### Introduction
 
-In this post, we will be creating our own implementation of the [useState](https://reactjs.org/docs/hooks-overview.html#state-hook) hook. The goal is not to reproduce the offical implementation, but to gain a deeper understanding of how something _like_ **useState** can be implemented.
+I felt uneasy the first time I saw [hooks](https://reactjs.org/docs/hooks-intro.html) in React. They seemed a bit too magical. I remember looking at my first simple example that was using hooks, and thinking that it didn't make sense:
+
+
+```js
+function Counter() {
+  const [count, setCount] = useState(0)
+  return (
+    <div>
+        The count is: {count}
+        <button onClick={() => setCount(count + 1)}>+</button>
+    </div>
+  )
+}
+```
+
+
+So **setCount** was updating the **count** variable, but who was storing the latest value, and where. And how was the component magically re-rendered whenever **setCount** was called? I'll admit that I had only few answers even as I was using hooks in my daily development. A few time I tried to read about hooks under the hood. Some of these [articles](https://medium.com/the-guild/under-the-hood-of-reacts-hooks-system-eb59638c9dba) described the react source and talked about why call order mattered. But at the time these seemed to go over my head. Finally I decided to try and re-implement some hooks from the ground up. This post represents one such effort.
+
+In this post, we will be creating our own implementation of the [useState](https://reactjs.org/docs/hooks-overview.html#state-hook) hook. The goal is not to reproduce the offical implementation, but to gain a deeper understanding of how something _like_ **useState** can be implemented. A personal benefit of this post for me, (besides the act of sharing my endless sea of knowledge with the world) is to decrease my sense of discomfort at using technology who'se implementation I cannot begin to understand. 
 
 ### What is state
 
