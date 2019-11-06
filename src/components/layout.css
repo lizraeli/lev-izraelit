@@ -4,7 +4,7 @@ code {
 
 body {
   margin: 0;
-  font-family: 'Nunito', 'Avenir', 'Helvetica', 'sans-serif';
+  font-family: 'Merriweather', 'Nunito', 'Avenir', 'Helvetica', 'sans-serif';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -254,7 +254,7 @@ h2 {
 h3 {
   margin-left: 0;
   margin-right: 0;
-  margin-top: 0;
+  margin-top: 0.5em;
   padding-bottom: 0;
   padding-left: 0;
   padding-right: 0;
@@ -374,8 +374,8 @@ p {
   padding-right: 0;
   padding-top: 0;
   margin-bottom: 1.45rem;
-  font-family: "Roboto";
   font-size: 18px;
+  line-height: 1.6rem;
 }
 figure {
   margin-left: 0;
@@ -531,7 +531,7 @@ li > p {
   margin-bottom: calc(1.45rem / 2);
 }
 code {
-  font-size: 0.8rem;
+  font-size: 1rem;
   line-height: 1.45rem;
 }
 kbd {
@@ -609,7 +609,10 @@ pre tt:after {
 .gatsby-highlight {
   background-color: #1d1f21;
   border-radius: 0.3em;
-  margin: 0.5em 0;
+  margin-top: 0em;
+  margin-left: 0;
+  margin-right: 0;
+  margin-bottom: 1.5em;
   padding: 1em;
   overflow: auto;
 }
@@ -628,4 +631,8 @@ pre tt:after {
 .code-editor {
   width: 100%;
   height: 400px;
+}
+
+.token.class-name {
+  text-decoration: none;
 }

@@ -37,6 +37,7 @@
     "react-helmet": "^5.2.1",
     "react-live": "^2.2.1",
     "styled-components": "^4.4.0",
+    "typeface-merriweather": "^0.0.72",
     "typeface-nunito": "0.0.72"
   },
   "devDependencies": {
