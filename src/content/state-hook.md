@@ -8,7 +8,7 @@ path: "/blog/state-hook"
 
 ### Introduction
 
-I felt uneasy the first time I read about [hooks](https://reactjs.org/docs/hooks-intro.html) in React. Their inner workings seemed too magical. I remember looking at simple example, and trying to make sense of how hooks worked:
+I felt uneasy the first time I read about [hooks](https://reactjs.org/docs/hooks-intro.html) in React. Their inner workings seemed too magical. I remember looking at a simple example, and trying to make sense of how hooks worked:
 
 
 ```jsx
