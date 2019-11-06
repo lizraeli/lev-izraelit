@@ -176,7 +176,7 @@ const Counter = () => {
 }
 ```
 
-Next, I wanted to pass an initial value when calling **useCount**, instead of having **useCount** decide what it is. This presented me with a challenge - I only needed to set the passed-in value the first time **useCount** was called. After several attempts, I decided on adding a property to **MyReact** called `stateInitialized` which defaults to false, and is set to **true** the first time **useCount** is called, after the **count** had been initialized.
+Next, I wanted to pass an initial value when calling **useCount**, instead of having **useCount** decide what this value should be. This presented me with a challenge - I only needed to set the passed-in value the first time **useCount** was called. After several attempts, I decided on adding a property to **MyReact** called **stateInitialized** which defaults to false, and is set to **true** the first time **useCount** is called, after the **count** had been initialized.
 
 ```jsx
 const MyReact = {
