@@ -180,12 +180,11 @@ Next, I wanted to pass an initial value when calling **useCount**, instead of ha
 
 ```jsx
 const MyReact = {
-  state: null,
+  // ...
   stateInitialized: false,
-  setCount(newCount) {
-    MyReact.count = newCount;
-    ReactDOM.render(<Counter />, rootElement);
-  },
+  // ...
+  // ...
+  // ...
   useCount(initialValue) {
     if (!MyReact.stateInitialized) {
       MyReact.count = initialValue;
@@ -197,12 +196,7 @@ const MyReact = {
 
 const Counter = () => {
   const [count, setCount] = MyReact.useCount(0)
-  return (
-    <>
-      <div>{count}</div>
-      <button onClick={() => setCount(count + 1)}>+</button>
-    </>
-  )
+  // ...
 }
 ```
 
@@ -260,7 +254,7 @@ const MyReact = {
 
       let stateHolder;
       // if we reached beyond the last element of the array
-      // We will need 
+      // We will need create a new state holder
       if (currentStateIndex === stateHolderArr.length){
         stateHolder = {
           state: initialValue,
