@@ -8,7 +8,7 @@ path: "/blog/state-hook"
 
 ### Introduction
 
-I felt uneasy the first time I read about [hooks](https://reactjs.org/docs/hooks-intro.html) in React. Their inner workings seemed too magical. I remember looking at a simple example, and trying to make sense of how hooks worked:
+I felt uneasy the first time I read about [hooks](https://reactjs.org/docs/hooks-intro.html) in React. Their inner workings seemed too magical. I remember looking at a simple example and trying to make sense of how hooks worked:
 
 
 ```jsx
@@ -24,13 +24,13 @@ function Counter() {
 ```
 
 
-So **setCount** was updating the **count** variable, but who was storing the current value of the count, and where? And how was the component being re-rendered whenever **setCount** was called? Even as I adoped hooks into my codebases I had few answers. So I started searching for sources that described how hooks work under the hood. These helped, but still I lacked an intuitive understanding of hooks. Finally I decided to try and re-implement some of the core hooks myself.
+So **setCount** was updating the **count** variable, but who was storing the current value of the count, and where? And how was the component being re-rendered whenever **setCount** was called? Even as I adopted hooks into my codebases I had few answers. So I started searching for sources that described how hooks work under the hood. These helped, but still, I lacked an intuitive understanding of hooks. Finally, I decided to try and re-implement some of the core hooks myself.
 
-This post details my process of re-implementing the [useState](https://reactjs.org/docs/hooks-overview.html#state-hook) hook. This implementation need not match the real one. The goal is to gain a deeper understanding into of how something like **useState** _can_ be implemented.
+This post details my process of re-implementing the [useState](https://reactjs.org/docs/hooks-overview.html#state-hook) hook. It's not too important if this implementation matches real one - the goal is to gain a deeper understanding of how something like useState _can_ be implemented.
 
-### What is state
+### What is state?
 
-Generally speaking, [state](https://en.wikipedia.org/wiki/State_(computer_science)) includes any value that changes over time, when that value needs to be _remembered_ by the program for later use. When a component stores a value locally and modifies this becomes the state of that component. 
+Generally speaking, [state](https://en.wikipedia.org/wiki/State_(computer_science)) includes any value that changes over time, when that value needs to be remembered by the program for later use. When a component stores a value locally and modifies this becomes the state of that component. 
 
 ### Stateful classses
 
@@ -61,7 +61,7 @@ class Counter extends React.Component {
 }
 ```
 
-The inherited state method recreates the component's state by merging the existing state object with the new object that was passed. If I were to implement the base  **setState**, it would look something like this:
+The inherited state method recreates the component's state by merging the existing state object with the new object that was passed. If I were to implement the base **setState**, it would look something like this:
 
 ```js
 class BaseReactComponent {
@@ -76,9 +76,9 @@ class BaseReactComponent {
 
 ```
 
-### Functions without State
+### Functions and State
 
-Unlike the object or class, a function cannot internally maintain state. In react prior to hooks, a functional component and a _stateless_ function component were the same thing. Intuitively this makes sense - when we think about a simple function, given the same input, it would return the same output every time:
+Unlike the object or class, a function cannot internally maintain state. In react before hooks, a _functional component_ and a _stateless function component_ were the same thing. Intuitively this makes sense - when we think about a simple function, given the same input, it would return the same output every time:
 
 ```js
 const add = (x, y) => x + y
@@ -110,7 +110,7 @@ const Counter = () => (
 )
 ```
 
-This didn't quite work. Even though value of **count** was chaing, the **Counter** component did not re-render to show it. I stil need something similar to a **setState** call, so that I could rerender the component whenever the state  was changed. So I made a **setCount** function that did just that:
+This didn't quite work. Even though the value of **count** was changing, the **Counter** component did not re-render to show it. I still need something similar to a **setState** call, so that I could rerender the component whenever the state was changed. So I made a **setCount** function that did just that:
 
 
 ```jsx
@@ -156,7 +156,7 @@ const Counter = () => {
 }
 ```
 
-To make this even cleaner, I added a function called **useCount** to **MyReact**, that returned  both **count** and **setCount** together, as the only two elements of an array:
+To make this even clearer, I added a function called **useCount** to **MyReact**, that returned both **count** and **setCount** together, as the only two elements of an array:
 
 ```jsx
 const MyReact = {
@@ -176,7 +176,7 @@ const Counter = () => {
 }
 ```
 
-Next, I wanted to pass an initial value when calling **useCount**, instead of having **useCount** decide what this value should be. This presented me with a challenge - I only needed to set the passed-in value the first time **useCount** was called. After several attempts, I decided on adding a property to **MyReact** called **stateInitialized** which defaults to false, and is set to **true** the first time **useCount** is called, after the **count** had been initialized.
+Next, I wanted to pass an initial value when calling **useCount**, instead of having **useCount** decide what this value should be. This presented me with a challenge - I only needed to set the passed-in value the first time **useCount** was called. After several attempts, I decided on adding a property to **MyReact** called **stateInitialized** which defaults to false and is set to **true** the first time **useCount** is called after the **count** had been initialized.
 
 ```jsx
 const MyReact = {
@@ -201,7 +201,7 @@ const Counter = () => {
 ```
 
 
-Next, I wanted to make **MyReact** more reusable. The **count** and **setCount** variables were too specific to the needs of the **Counter** components. So I changed the name of **count** to **state**, and the method names to **useState** and  **setState**. I also added a **render** method to **MyReact**, in order to save the component that was being rendered.
+Next, I wanted to make **MyReact** more reusable. The **count** and **setCount** variables were too specific to the needs of the **Counter** components. So I changed the name of **count** to **state** and the method names to **useState** and  **setState**. I also added a **render** method to **MyReact**, in order to save the component that was being rendered.
 
 
 ```js
@@ -229,7 +229,7 @@ const MyReact = {
 
 ### Multiple state variables
 
-The above was working, and seemed like I was going in the right direction. But my implementation still had a number of things missing. For one, I was only able to use **MyReact.useState** for a single variable. Any subsequent call to **MyReact.useState** were overwriting the variable that was defined before. In order to allow **MyReact** to manage multiple state variables, I decidedto store these in an array. Now I needed some way to know, each time **setState** was being called, *which* state variable was the one that I needed to change. I did that by  by relying on the call order to **useState**. Take, for example, the two subsequent calls below:
+The above was working and it seemed like I was going in the right direction. But my implementation still had a number of things missing. For one, I was only able to use **MyReact.useState**  for a single variable. Any subsequent calls to **MyReact.useState** were overwriting the variable that was defined before. To allow **MyReact** to manage multiple state variables, I decided to store these in an array. Now I needed some way to know, each time **setState** was being called, which state variable was the one that I needed to change. I did that by relying on the call order to **useState**. Take, for example, the two subsequent calls below:
 
 ```jsx
 const MyCounter = () => {
@@ -238,9 +238,9 @@ const MyCounter = () => {
 }
 ```
 
-The **MyReact.useState** methods would always be executed in the same order, first returning the values of **count1**, **setCount1**, and then returning the values of **count2**, **setCount2**. As long as **MyReact.useState(0)** is not called in a conditional block, the two calls would always happen in these order. 
+The **MyReact.useState** methods would always be executed in the same order, first returning the values of **count1**, **setCount1**, and then returning the values of **count2**, **setCount2**. As long as **MyReact.useState()** is not called in a conditional block, the two calls would always happen in this order.
 
-Now I also needed each state variable to have its own **setState** method. To do this, I made an array of objects, each storing the **state** value *and* the corresponding **setState** calls. I gave each of these objects the name **stateHolder**. Combined together, these formed **stateHolderArr**.
+Now I also needed each state variable to have its own **setState** method. To do this, I made an array of objects, each storing the **state** value *and* the corresponding **setState** calls. I gave each of these objects the name **stateHolder**. Combined, these formed **stateHolderArr**.
 
 I also added a  **currentStateIndex** variable to store store the index of the latest **stateHolder** that was refrenced. The **currentStateIndex** would be reset to **0** whenver *any* **setState** was called. When the value of **currentStateIndex** became equal to the length of the array, that meant that a new **stateHolder** needed to be created.
 
@@ -283,8 +283,8 @@ Here's an example using the updated **MyReact**:
 
 <iframe class="code-editor" src="../post-1/use-state-arr" style="overflow: auto;"></iframe>
 
-To follow how this all works, you can open the browser's devtools and look at the **console.log** log output from inside **useState**. On each render of the component, **useState** will be called twice. On the initial render, two **stateHolder** objects will be creating. When we click on either of the **+** buttons, **setState** is called once, which leads to the currentIndex to be reset to 0, and to the component being re-rendered.
+To follow how this all works, you can open the browser's devtools and look at the **console.log** log output from inside **useState**. On each render of the component, **useState** will be called twice. On the initial render, two **stateHolder** objects will be creating. When we click on either of the **+** buttons,, **setState** is called once, which leads to the currentIndex to be reset to 0, and to the component being re-rendered.
 
 ### Conclusion
 
-So, I arrived at something pretty similar to React's **useState** hook. I cannot say if this process has made me a better React developer, but I do feel like this has helped me think more deeply about coding in general. It's important to remember that while we may be using hooks now, we are not _bound_ to be using them forever.
+So, I arrived at something similar to React's  **useState** hook. It was still missing many features of the _real_ **useState** hook - for one, it only worked for a single component. I cannot say if this process has made me a better React developer, but I do feel like it has helped me think more deeply about coding. It is useful to understand abstractions so that we are not bound by them, and can so we are able to develop abstractions of our own.
