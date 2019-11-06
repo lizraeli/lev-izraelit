@@ -129,7 +129,7 @@ const Counter = () => (
 )
 ```
 
-This worked! To ensure **count** and **setCount** were used together, I made them into properties of the an object. I called this object **MyReact**:
+This worked! To ensure **count** and **setCount** were used together, I made them into properties of an object. I called this object **MyReact**:
 
 ```jsx
 const MyReact = {
