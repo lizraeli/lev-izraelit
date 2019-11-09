@@ -636,3 +636,8 @@ pre tt:after {
 .token.class-name {
   text-decoration: none;
 }
+
+:not(pre)>code[class*=language-] {
+  background-color: #fcfaff;
+  color: black;
+}
