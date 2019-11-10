@@ -1,3 +1,8 @@
+:root {
+  --link-underline-color: black;
+  --text-color: hsla(0, 0%, 0%, 0.8);
+}
+
 code {
   background-color: hsla(0, 0%, 0%, 0.04);
 }
@@ -40,15 +45,24 @@ progress {
 template {
   display: none;
 }
+
 a {
   font-style: normal;
-  color: hsla(0, 0%, 0%, 0.8);
+  color: var(--text-color);
+  text-decoration: none;
   -webkit-text-decoration-skip: objects;
+  box-shadow: 0 1px 0 0 var(--link-underline-color);
+}
+a:after {
+  content: none;
 }
 a:active,
 a:hover {
   outline-width: 0;
+  box-shadow: none;
+  text-decoration: none;
 }
+
 abbr[title] {
   border-bottom: none;
   text-decoration: underline;
@@ -70,6 +84,7 @@ mark {
   background-color: #ff0;
   color: #000;
 }
+
 small {
   font-size: 80%;
 }
@@ -638,6 +653,10 @@ pre tt:after {
 }
 
 :not(pre)>code[class*=language-] {
-  background-color: #fcfaff;
+  background-color: rgba(255, 229, 100, 0.2);
   color: black;
+}
+
+:not(pre)>code[class*=language-]:after {
+  content: none;
 }
