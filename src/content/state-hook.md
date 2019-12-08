@@ -370,5 +370,4 @@ Which would lead to `Counter` being rendered again. On the subsequent calls to `
 
 ### Conclusion
 
-So, we've arrived at something pretty similar to React's `useState` hook. I cannot say if this process has made me a better React developer, but I do feel that this has helped me think more deeply about programming in general. It can be worthwhile understanding how abstractions can be implemented - this can help us better understand the ones that have already been made, and to make new abstractions of our own.
-
+So, we've arrived at something pretty similar to React's useState hook. I cannot say if understanding the internal workings of hooks would make someone a better React developer. But I do feel that is is worthwhile to try and understand how abstractions can be created - this can help us understand the ones that have already been made, and to make new abstractions of our own.
