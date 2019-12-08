@@ -332,6 +332,7 @@ const Counter = () => {
   const [count1, setCount1] = MyReact.useState(0); // <--
 ```
 
+The values of `MyReact` will be:
 ```jsx
 MyReact {  
   stateArr: [{ value: 0, setState: fn() }],
@@ -345,9 +346,10 @@ _After_ the second call to `useState`:
 ```jsx
 const Counter = () => {
   const [count1, setCount1] = MyReact.useState(0); 
-  const [count1, setCount1] = MyReact.useState(0); // <--
+  const [count2, setCount2] = MyReact.useState(0); // <--
 ```
 
+The values of `MyReact` will be:
 ```jsx
 MyReact {  
   stateArr: [{ value: 0, setState: fn() }, { value: 0, setState: fn() }],
