@@ -7,7 +7,7 @@ path: "/blog/covid-19-case-tracker-1"
 
 # Introduction
 
-In this series of articles we will use the [New York Times Covid-19 dateset](https://github.com/nytimes/covid-19-data) to create a case tracker, in which we will display data as a time series of the US, by state or by county. The complete web app is available on GitHub - [covid-19-us](https://github.com/lizraeli/covid-19-us) and an live version is hosted at http://covid19-us.levizraelit.com. We will use React and Typescript along with libraries for UI and chart visualization. If you have not used Typescript before, this would also introduce you to some of the fundamentals of the language.
+In this series of articles we will use the [New York Times Covid-19 dateset](https://github.com/nytimes/covid-19-data) to create a case tracker, in which we will display data as a time series of the US, by state or by county. The complete web app is available on GitHub - [covid-19-us](https://github.com/lizraeli/covid-19-us) and a live version is hosted at http://covid19-us.levizraelit.com. We will use React and Typescript along with other libraries for UI and chart visualization. If you have not used Typescript before, this will also introduce you to some of the fundamentals of the language.
 
 
 
