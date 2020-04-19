@@ -11,10 +11,6 @@ In this series of articles we will use the [New York Times Covid-19 dateset](htt
 
 
 
-![cov-19-viewer](/Users/lev.izraelit/Desktop/cov-19-viewer.png)
-
-
-
 ## Taking a look at the data
 
 The data in the [New York Times Covid-19 dateset](https://github.com/nytimes/covid-19-data) is hosted on GitHub in 3 csv file - [us.csv](https://github.com/nytimes/covid-19-data/blob/master/us.csv), [us-states.csv](https://github.com/nytimes/covid-19-data/blob/master/us-states.csv)  and [us-counties.csv](https://github.com/nytimes/covid-19-data/blob/master/us-counties.csv). We can see each of these files in its raw form by clicking on the `Raw` button at the top right corner.
