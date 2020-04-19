@@ -114,7 +114,7 @@ The additional arguments:
 
 The `complete` callback describes what we'd like to do once the parsing is done. This callback is provided with a [results](https://www.papaparse.com/docs#results) object, which contains a `data` property - an an array of objects of data keyed by the field name.  It also contains an array of `errors`, which at the moment of writing is an empty array, meaning there are no errors parsing the CSV. 
 
-Now we come to the issue of the `data` property on `parseResult`. Earlier I said we can assume that the data parsed from the CSV will have the properties defined in the `StateCaseData` interface. And at the moment, if I pass `parseResult.data` to the `renderStateData` function, everything works as expected. But we don't want to assume that data will always be correct. In fact the type of `parseResult.data`  is defined as `any[] `   - whiche means it is an array where each element may be of any type whatsover. What if some of the elements in this array were missing a `cases` or `state` property? What we would want is to only keep those objects that actually confrom to the ``StateCaseData` interface. We do this by defining a function called `isStateCaseData`:
+Now we come to the issue of the `data` property on `parseResult`. Earlier I said we can assume that the data parsed from the CSV will have the properties defined in the `StateCaseData` interface. And at the moment, if I pass `parseResult.data` to the `renderStateData` function, everything works as expected. But we don't want to assume that data will always be correct. In fact the type of `parseResult.data`  is defined as `any[] `   - whiche means it is an array where each element may be of any type whatsover. What if some of the elements in this array were missing a `cases` or `state` property? What we would want is to only keep those objects that actually confrom to the `StateCaseData` interface. We do this by defining a function called `isStateCaseData`:
 
 ```typescript
 function isStateCaseData(dataElem: any): data is StateCaseData {
@@ -133,7 +133,7 @@ const isString = (value: any): value is String => typeof value === "string";
 
 Looking at `isStateCaseData` - the return type would propbably be the first thing that stands out: `dataElem is StateCaseData`. This function is in fact a [type guard](https://www.typescriptlang.org/docs/handbook/advanced-types.html#user-defined-type-guards) - a function that returns a boolean which indicates if the argument is of the stated type . Here the function would return `true` if the `dataElem` argument is of the `StateCaseData` type and false otherwise. We do this by checking the types of each of the properties of `dataElem`: `date` and `state` must be a strings; `cases` and `deaths` must be numbers. This type checks are performed via their own type guards `isString` and `isNumber`.
 
-Going back to 
+Going back to the filtered data:
 
 ```typescript
 const data = parseResult.data.filter(isStateCaseData);
