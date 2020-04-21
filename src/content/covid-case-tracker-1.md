@@ -7,8 +7,9 @@ path: "/blog/covid-19-case-tracker-1"
 
 # Introduction
 
-In this series of articles we will use the [New York Times Covid-19 dateset](https://github.com/nytimes/covid-19-data) to create a case tracker, which will display case data as a time series. Users will be able to view data for the US as a whole, or narrow it down by state or by county. The complete web app is available on GitHub - [covid-19-us](https://github.com/lizraeli/covid-19-us) and a live version is hosted at http://covid19-us.levizraelit.com. We will use React and Typescript along with other libraries for UI and chart visualization. If you don't have much experience with Typescript, these articles also introduce you to some of the fundamentals and more advanced concepts of the language.
+In this series of articles we will use the [New York Times Covid-19 dateset](https://github.com/nytimes/covid-19-data) to create a case tracker, which will display case data as a time series. Users will be able to view data for the US as a whole, or narrow it down by state or by county. The complete web app is available on GitHub - [covid-19-us](https://github.com/lizraeli/covid-19-us) and a live version is hosted at http://covid19-us.levizraelit.com. We will use React and Typescript along with other libraries for UI and chart visualization. If you have not used  Typescript before, these articles will also introduce you to some of the fundamentals and more advanced concepts of the language.
 
+![Case tracker Screenshort](/covid-case-tracker-1.png)
 
 ## Taking a look at the data
 
@@ -141,5 +142,5 @@ const data = parseResult.data.filter(isStateCaseData);
 If we hover over `data` we'll see that the inferred type is `StateCaseData[]` - we have validated that each element in the list is in fact of `StateCaseData` type. Finally, we can render the data by passing it to the `renderStateData` function. This simply iterates over the data array and renders the date, state, and cases of each element.
 
 
-That's all for this time. In the next part of this series we will look at grouping the data in a way that allows us to render it into charts and select elements.
+That's all for this time. In the next part of this series we will look at grouping the data in a way that allows us to render it into charts and `<select>` elements.
 
