@@ -1,5 +1,5 @@
 ---
-title: "Building a Covid 19 Case Tracker - Part 1"
+title: "Building a Covid-19 Case Tracker by US State and County - Part 1"
 date: "2020-04-19"
 draft: false
 path: "/blog/covid-19-case-tracker-1"
