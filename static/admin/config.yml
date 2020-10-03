@@ -1,0 +1,19 @@
+backend:
+    name: github
+    repo: lizraeli/lev-izraelit
+
+publish_mode: editorial_workflow
+
+media_folder: src/images
+public_folder: /
+
+collections:
+    - name: blog
+      label: Blog
+      folder: src/content
+      create: true
+      fields:
+        - { name: path, label: Path }
+        - { name: date, label: Date, widget: date }
+        - { name: title, label: Title }
+        - { name: body, label: Body, widget: markdown }
