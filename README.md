@@ -1,5 +1,5 @@
 
-## My Personal Website and Blog
+## Personal Website and Blog
 
 Built with [GatsbyJS](https://www.gatsbyjs.org/) based on the [Julia starter](gatsby-starter-julia).
 
